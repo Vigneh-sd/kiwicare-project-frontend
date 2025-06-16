@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { registerUser } from '../services/api';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
