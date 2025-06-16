@@ -9,11 +9,12 @@ function RequestHelp() {
   const [message, setMessage] = useState('');
 
   const accessToken = localStorage.getItem('accessToken');
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchVolunteers = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/user/volunteers', {
+        const response = await axios.get(`${BASE_URL}/user/volunteers`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         setVolunteers(response.data);
@@ -24,7 +25,7 @@ function RequestHelp() {
     };
 
     fetchVolunteers();
-  }, [accessToken]);
+  }, [accessToken, BASE_URL]);
 
   const handleSendMessage = async () => {
     if (!selectedVolunteerId || !message.trim()) {
@@ -38,7 +39,7 @@ function RequestHelp() {
       const receiverId = Number(selectedVolunteerId);
 
       await axios.post(
-        'http://localhost:8080/messages',
+        `${BASE_URL}/messages`,
         {
           senderId,
           receiverId,

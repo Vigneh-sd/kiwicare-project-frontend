@@ -12,6 +12,7 @@ function BookHelp() {
 
   const accessToken = localStorage.getItem('accessToken');
   const userId = jwtDecode(accessToken).id;
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleSearch = async () => {
     if (!date || !fromTime || !toTime) {
@@ -20,7 +21,7 @@ function BookHelp() {
     }
 
     try {
-      const res = await axios.get(`http://localhost:8080/availability/search`, {
+      const res = await axios.get(`${BASE_URL}/availability/search`, {
         params: { date, fromTime, toTime },
         headers: { Authorization: `Bearer ${accessToken}` }
       });
@@ -41,7 +42,7 @@ function BookHelp() {
     }
 
     try {
-      await axios.post('http://localhost:8080/bookings', {
+      await axios.post(`${BASE_URL}/bookings`, {
         userId,
         volunteerId: selectedVolunteerId,
         date,

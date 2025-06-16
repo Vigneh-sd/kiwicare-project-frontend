@@ -7,6 +7,7 @@ function VolunteerAvailability() {
   const accessToken = localStorage.getItem('accessToken');
   const decodedToken = jwtDecode(accessToken);
   const volunteerId = decodedToken.id;
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [date, setDate] = useState('');
   const [fromTime, setFromTime] = useState('');
@@ -20,15 +21,19 @@ function VolunteerAvailability() {
     }
 
     try {
-      await axios.post('http://localhost:8080/availability/save', {
-        volunteer: { id: volunteerId },
-        date,
-        fromTime,
-        toTime,
-        available
-      }, {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      });
+      await axios.post(
+        `${BASE_URL}/availability/save`,
+        {
+          volunteer: { id: volunteerId },
+          date,
+          fromTime,
+          toTime,
+          available,
+        },
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
 
       toast.success('Availability saved successfully!');
       setDate('');

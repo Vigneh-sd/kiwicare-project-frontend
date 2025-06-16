@@ -10,12 +10,13 @@ function VolunteerMyBookings() {
   const accessToken = localStorage.getItem('accessToken');
   const decodedToken = jwtDecode(accessToken);
   const volunteerId = decodedToken.id;
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/bookings/volunteer/${volunteerId}`,
+          `${BASE_URL}/bookings/volunteer/${volunteerId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -31,7 +32,7 @@ function VolunteerMyBookings() {
     };
 
     fetchBookings();
-  }, [volunteerId, accessToken]);
+  }, [volunteerId, accessToken, BASE_URL]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 px-4">

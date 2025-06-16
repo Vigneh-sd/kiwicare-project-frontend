@@ -10,12 +10,13 @@ function UserMessages() {
   const accessToken = localStorage.getItem('accessToken');
   const decodedToken = jwtDecode(accessToken);
   const userId = decodedToken.id;
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/messages/sent/${userId}`,
+          `${BASE_URL}/messages/sent/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -31,7 +32,7 @@ function UserMessages() {
     };
 
     fetchMessages();
-  }, [userId, accessToken]);
+  }, [userId, accessToken, BASE_URL]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 px-4">

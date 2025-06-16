@@ -10,11 +10,12 @@ function UserMakePayment() {
   const accessToken = localStorage.getItem('accessToken');
   const decoded = jwtDecode(accessToken);
   const userId = decoded.id;
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/bookings/user/${userId}`, {
+        const res = await axios.get(`${BASE_URL}/bookings/user/${userId}`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         setBookings(res.data);
@@ -25,7 +26,7 @@ function UserMakePayment() {
     };
 
     fetchBookings();
-  }, [userId, accessToken]);
+  }, [userId, accessToken, BASE_URL]);
 
   const handlePayment = async () => {
     if (!selectedBookingId || !amount) {
@@ -34,7 +35,7 @@ function UserMakePayment() {
     }
 
     try {
-      await axios.post('http://localhost:8080/payments', {
+      await axios.post(`${BASE_URL}/payments`, {
         userId,
         bookingId: selectedBookingId,
         amount,

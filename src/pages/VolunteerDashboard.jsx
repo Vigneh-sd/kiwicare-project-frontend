@@ -11,12 +11,13 @@ function VolunteerDashboard() {
   const accessToken = localStorage.getItem('accessToken');
   const decodedToken = jwtDecode(accessToken);
   const volunteerId = decodedToken.id;
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchAvailability = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/availability/get/${volunteerId}`,
+          `${BASE_URL}/availability/get/${volunteerId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -32,7 +33,7 @@ function VolunteerDashboard() {
     };
 
     fetchAvailability();
-  }, []);
+  }, [volunteerId, accessToken, BASE_URL]);
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8">
@@ -61,13 +62,13 @@ function VolunteerDashboard() {
           >
             ⏱️ Set Availability
           </button>
-          <button
-  onClick={() => navigate('/volunteer/sent-messages')}
-  className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"
->
-  📤 Sent Messages
-</button>
 
+          <button
+            onClick={() => navigate('/volunteer/sent-messages')}
+            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"
+          >
+            📤 Sent Messages
+          </button>
         </div>
 
         <h3 className="text-xl font-semibold mb-4">📅 Your Availability</h3>

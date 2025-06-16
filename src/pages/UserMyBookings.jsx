@@ -8,6 +8,7 @@ function UserMyBookings() {
   const accessToken = localStorage.getItem('accessToken');
   const decoded = jwtDecode(accessToken);
   const userId = decoded.id;
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     fetchBookings();
@@ -15,7 +16,7 @@ function UserMyBookings() {
 
   const fetchBookings = async () => {
     try {
-      const res = await axios.get(`http://localhost:8080/bookings/user/${userId}`, {
+      const res = await axios.get(`${BASE_URL}/bookings/user/${userId}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       setBookings(res.data);
@@ -27,7 +28,7 @@ function UserMyBookings() {
 
   const cancelBooking = async (bookingId) => {
     try {
-      await axios.delete(`http://localhost:8080/bookings/${bookingId}`, {
+      await axios.delete(`${BASE_URL}/bookings/${bookingId}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       toast.success('Booking cancelled and refunded');
