@@ -1,7 +1,7 @@
 # KiwiCare Frontend 🥝
 
 **KiwiCare** is a full-stack volunteer help platform where users can request assistance from available volunteers.  
-This is the **frontend** built using **React.js** and styled with **Tailwind CSS**. It connects with a secure Spring Boot backend and offers a fully role-based experience for users, volunteers, and admins.
+The KiwiCare Frontend is a responsive web application built with React.js and styled using Tailwind CSS. It provides role-based dashboards for users, volunteers, and admins, enabling help requests, availability setup, bookings, messaging, and payments. The app interacts with a secure Spring Boot backend via JWT-authenticated REST APIs and delivers a clean user experience with modern UI practices.
 
 ---
 
