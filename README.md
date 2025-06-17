@@ -37,17 +37,15 @@ This is the **frontend** built using **React.js** and styled with **Tailwind CSS
 
 ## 📁 Folder Structure
 
-
+```bash
 Kiwicare_frontend/
 ├── public/
 ├── src/
 │   ├── assets/
 │   │   └── react.svg
-│   │
 │   ├── components/
 │   │   ├── Navbar.jsx
 │   │   └── ProtectedRoute.jsx
-│   │
 │   ├── pages/
 │   │   ├── AdminDashboard.jsx
 │   │   ├── BookHelp.jsx
@@ -65,23 +63,20 @@ Kiwicare_frontend/
 │   │   ├── VolunteerMessages.jsx
 │   │   ├── VolunteerMyBookings.jsx
 │   │   └── VolunteerSentMessages.jsx
-│   │
 │   ├── services/
 │   │   └── api.js
-│   │
 │   ├── App.css
 │   ├── App.jsx
 │   ├── index.css
 │   ├── main.jsx
 │   └── Welcome.jsx
-│
-
 ├── .gitignore
 ├── index.html
 ├── package.json
 ├── tailwind.config.js
 ├── vite.config.js
-└── README.md       
+└── README.md
+ 
 
 ## 🔗 Backend Repository
 
