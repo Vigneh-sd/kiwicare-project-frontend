@@ -35,6 +35,20 @@ This is the **frontend** built using **React.js** and styled with **Tailwind CSS
 
 ---
 
+## 🔗 Backend Repository
+
+➡️ **KiwiCare Backend (Spring Boot):** [Click here to view the backend repo](https://github.com/Vigneh-sd/Backend_Kiwicare.git)
+
+---
+
+## 👨‍💻 Author
+
+Developed by **Vignesh Subramaniam**  
+📧 Connect with me on [LinkedIn](https://www.linkedin.com/in/vigneshsubramaniam07/)
+
+
+---
+
 ## 📁 Folder Structure
 
 ```bash
@@ -76,20 +90,12 @@ Kiwicare_frontend/
 ├── tailwind.config.js
 ├── vite.config.js
 └── README.md
+
+
+
  
 
-## 🔗 Backend Repository
 
-➡️ **KiwiCare Backend (Spring Boot)**  
-https://github.com/Vigneh-sd/Backend_Kiwicare.git
-
----
-
-## 👨‍💻 Author
-
-Developed by **Vignesh Subramaniam**  
-📧 Connect with me on LinkedIn  
-https://www.linkedin.com/in/vigneshsubramaniam07/
 
 
 
