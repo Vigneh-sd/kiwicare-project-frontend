@@ -11,13 +11,12 @@ function VolunteerDashboard() {
   const accessToken = localStorage.getItem('accessToken');
   const decodedToken = jwtDecode(accessToken);
   const volunteerId = decodedToken.id;
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchAvailability = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/availability/get/${volunteerId}`,
+          `http://localhost:8080/availability/get/${volunteerId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -33,7 +32,7 @@ function VolunteerDashboard() {
     };
 
     fetchAvailability();
-  }, [volunteerId, accessToken, BASE_URL]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8">
@@ -81,7 +80,7 @@ function VolunteerDashboard() {
           <p className="text-gray-500">No availability set yet.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-300 shadow text-sm">
+            <table className="min-w-full bg-white border border-gray-300 shadow text-sm rounded-lg">
               <thead className="bg-gray-100">
                 <tr>
                   <th className="px-4 py-2 border">Date</th>

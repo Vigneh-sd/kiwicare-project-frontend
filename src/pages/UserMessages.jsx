@@ -10,13 +10,12 @@ function UserMessages() {
   const accessToken = localStorage.getItem('accessToken');
   const decodedToken = jwtDecode(accessToken);
   const userId = decodedToken.id;
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/messages/sent/${userId}`,
+          `http://localhost:8080/messages/sent/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -32,7 +31,7 @@ function UserMessages() {
     };
 
     fetchMessages();
-  }, [userId, accessToken, BASE_URL]);
+  }, [userId, accessToken]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 px-4">
@@ -53,10 +52,12 @@ function UserMessages() {
                 className="border border-gray-200 rounded-xl p-5 shadow-sm bg-blue-50"
               >
                 <div className="mb-2 text-sm text-gray-500">
-                  <span className="font-medium text-gray-700">To:</span> {msg.receiver.name} ({msg.receiver.location})
+                  <span className="font-medium text-gray-700">To:</span>{' '}
+                  {msg.receiver?.name} ({msg.receiver?.location})
                 </div>
                 <div className="mb-2 text-sm text-gray-500">
-                  <span className="font-medium text-gray-700">Sent at:</span> {new Date(msg.timestamp).toLocaleString()}
+                  <span className="font-medium text-gray-700">Sent at:</span>{' '}
+                  {new Date(msg.timestamp).toLocaleString()}
                 </div>
                 <div className="text-gray-800">
                   <span className="font-medium">Message:</span> {msg.content}

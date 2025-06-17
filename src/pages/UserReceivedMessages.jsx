@@ -11,13 +11,12 @@ function UserReceivedMessages() {
   const accessToken = localStorage.getItem('accessToken');
   const decodedToken = jwtDecode(accessToken);
   const userId = decodedToken.id;
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/messages/received/${userId}`,
+          `http://localhost:8080/messages/received/${userId}`,
           {
             headers: { Authorization: `Bearer ${accessToken}` },
           }
@@ -32,12 +31,12 @@ function UserReceivedMessages() {
     };
 
     fetchMessages();
-  }, [userId, accessToken, BASE_URL]);
+  }, [userId, accessToken]);
 
   const handleReply = async (msgId, receiverId, replyText) => {
     try {
       await axios.post(
-        `${BASE_URL}/messages`,
+        'http://localhost:8080/messages',
         {
           senderId: userId,
           receiverId,
@@ -63,7 +62,9 @@ function UserReceivedMessages() {
     <div className="min-h-screen flex items-center justify-center bg-blue-50 px-4">
       <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-8">
         <h2 className="text-3xl font-bold text-blue-700 mb-2">📥 Messages from Volunteers</h2>
-        <p className="text-gray-600 mb-6">These are replies sent by volunteers in response to your help requests. You can reply back below.</p>
+        <p className="text-gray-600 mb-6">
+          These are replies sent by volunteers in response to your help requests. You can reply back below.
+        </p>
 
         {loading ? (
           <div className="flex justify-center mt-10">
@@ -84,7 +85,9 @@ function UserReceivedMessages() {
                 <p className="mb-1 text-sm text-gray-700">
                   <strong>Sent at:</strong> {new Date(msg.timestamp).toLocaleString()}
                 </p>
-                <p className="text-sm mb-3"><strong>Message:</strong> {msg.content}</p>
+                <p className="text-sm mb-3">
+                  <strong>Message:</strong> {msg.content}
+                </p>
 
                 <textarea
                   className="w-full border border-gray-300 rounded p-2 mb-2"

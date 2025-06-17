@@ -9,12 +9,11 @@ function RequestHelp() {
   const [message, setMessage] = useState('');
 
   const accessToken = localStorage.getItem('accessToken');
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchVolunteers = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/user/volunteers`, {
+        const response = await axios.get('http://localhost:8080/user/volunteers', {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         setVolunteers(response.data);
@@ -25,7 +24,7 @@ function RequestHelp() {
     };
 
     fetchVolunteers();
-  }, [accessToken, BASE_URL]);
+  }, [accessToken]);
 
   const handleSendMessage = async () => {
     if (!selectedVolunteerId || !message.trim()) {
@@ -39,7 +38,7 @@ function RequestHelp() {
       const receiverId = Number(selectedVolunteerId);
 
       await axios.post(
-        `${BASE_URL}/messages`,
+        'http://localhost:8080/messages',
         {
           senderId,
           receiverId,
@@ -66,7 +65,6 @@ function RequestHelp() {
         <p className="text-center text-gray-600 mb-6">Select a volunteer and describe your situation below.</p>
 
         <div className="space-y-6">
-          {/* Volunteer Selector */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Select Volunteer</label>
             <select
@@ -83,7 +81,6 @@ function RequestHelp() {
             </select>
           </div>
 
-          {/* Message Input */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Your Message</label>
             <textarea
@@ -95,7 +92,6 @@ function RequestHelp() {
             ></textarea>
           </div>
 
-          {/* Submit Button */}
           <button
             onClick={handleSendMessage}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition"

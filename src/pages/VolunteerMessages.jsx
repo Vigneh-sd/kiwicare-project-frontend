@@ -13,13 +13,12 @@ function VolunteerMessages() {
   const accessToken = localStorage.getItem('accessToken');
   const decodedToken = jwtDecode(accessToken);
   const volunteerId = decodedToken.id;
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/messages/received/${volunteerId}`,
+          `http://localhost:8080/messages/received/${volunteerId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -36,12 +35,12 @@ function VolunteerMessages() {
     };
 
     fetchMessages();
-  }, [volunteerId, accessToken, BASE_URL]);
+  }, [volunteerId, accessToken]);
 
   const handleReply = async (msgId, receiverId, replyText) => {
     try {
       await axios.post(
-        `${BASE_URL}/messages`,
+        'http://localhost:8080/messages',
         {
           senderId: volunteerId,
           receiverId,

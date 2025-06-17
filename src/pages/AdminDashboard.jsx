@@ -11,26 +11,25 @@ function AdminDashboard() {
 
   const accessToken = localStorage.getItem('accessToken');
   const headers = { Authorization: `Bearer ${accessToken}` };
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/admin/users`, { headers });
+      const res = await axios.get('http://localhost:8080/admin/users', { headers });
       setUsers(res.data);
       toast.success('Fetched all users!');
-    } catch (err) {
-      console.error('Error fetching users:', err);
+    } catch (error) {
+      console.error('Error fetching users:', error);
       toast.error('Failed to fetch users.');
     }
   };
 
   const fetchVolunteers = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/admin/volunteers`, { headers });
+      const res = await axios.get('http://localhost:8080/admin/volunteers', { headers });
       setVolunteers(res.data);
       toast.success('Fetched all volunteers!');
-    } catch (err) {
-      console.error('Error fetching volunteers:', err);
+    } catch (error) {
+      console.error('Error fetching volunteers:', error);
       toast.error('Failed to fetch volunteers.');
     }
   };
@@ -42,11 +41,11 @@ function AdminDashboard() {
     }
 
     try {
-      const res = await axios.get(`${BASE_URL}/admin/user/${selectedUserId}`, { headers });
+      const res = await axios.get(`http://localhost:8080/admin/user/${selectedUserId}`, { headers });
       setSelectedUser(res.data);
       toast.success('User found!');
-    } catch (err) {
-      console.error('Error fetching user by ID:', err);
+    } catch (error) {
+      console.error('Error fetching user by ID:', error);
       toast.error('User not found or invalid role.');
       setSelectedUser(null);
     }
@@ -56,23 +55,23 @@ function AdminDashboard() {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      await axios.delete(`${BASE_URL}/admin/user/${id}`, { headers });
+      await axios.delete(`http://localhost:8080/admin/user/${id}`, { headers });
       toast.success("User deleted!");
       fetchUsers();
       fetchVolunteers();
-    } catch (err) {
-      console.error("Error deleting user:", err);
+    } catch (error) {
+      console.error("Error deleting user:", error);
       toast.error("Failed to delete user.");
     }
   };
 
   const fetchAllBookings = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/bookings/admin/all`, { headers });
+      const res = await axios.get('http://localhost:8080/bookings/admin/all', { headers });
       setBookings(res.data);
       toast.success('Fetched all bookings!');
-    } catch (err) {
-      console.error('Error fetching bookings:', err);
+    } catch (error) {
+      console.error('Error fetching bookings:', error);
       toast.error('Failed to fetch bookings.');
     }
   };

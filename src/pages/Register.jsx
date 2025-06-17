@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import { registerUser } from '../services/api';
 import { toast } from 'react-toastify';
-import { useState, useEffect } from 'react';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -18,35 +18,29 @@ function Register() {
     });
   };
 
-  useEffect(() => {
-  console.log("🌍 VITE_API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
-}, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/;
+    if (!strongPasswordRegex.test(formData.password)) {
+      toast.warning("Password must be at least 8 characters, include uppercase, lowercase, number, and special character.");
+      return;
+    }
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
+    try {
+      const response = await registerUser(formData);
+      toast.success(response.data);
+      console.log("Registration successful:", response.data);
+    } catch (error) {
+      const backendMessage =
+        error?.response?.data && typeof error.response.data === 'string'
+          ? error.response.data
+          : "Registration failed. Please try again.";
 
-  const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/;
-  if (!strongPasswordRegex.test(formData.password)) {
-    toast.warning("Password must be at least 8 characters, include uppercase, lowercase, number, and special character.");
-    return;
-  }
-
-  try {
-    const response = await registerUser(formData);
-    toast.success(response.data);
-    console.log("Registration successful:", response.data);
-  } catch (error) {
-    const backendMessage =
-      error?.response?.data && typeof error.response.data === 'string'
-        ? error.response.data
-        : "Registration failed. Please try again.";
-
-    toast.error(backendMessage);
-    console.error("Registration failed:", backendMessage);
-  }
-};
-
+      toast.error(backendMessage);
+      console.error("Registration failed:", backendMessage);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 px-4">
