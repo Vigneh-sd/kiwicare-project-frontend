@@ -1,12 +1,99 @@
-# React + Vite
+# KiwiCare Frontend 🥝
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**KiwiCare** is a full-stack volunteer help platform where users can request assistance from available volunteers.  
+This is the **frontend** built using **React.js** and styled with **Tailwind CSS**. It connects with a secure Spring Boot backend and offers a fully role-based experience for users, volunteers, and admins.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎥 Live Demo
 
-## Expanding the ESLint configuration
+**Demo Video:** [Watch Here](https://your-video-link)  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🚀 Tech Stack
+
+- **React.js** (Vite)
+- **Tailwind CSS**
+- **Axios**
+- **JWT Auth (via backend)**
+- **React Router**
+- **React Toastify** for notifications
+
+---
+
+## 🧩 Key Features
+
+✅ Register/Login for **User**, **Volunteer**, and **Admin**  
+✅ Role-Based Dashboards  
+✅ **Request Help** with date and time range  
+✅ **Volunteer Availability** setup  
+✅ **Booking Management** (view, cancel, payment)  
+✅ **Secure Messaging** between users and volunteers  
+✅ **Admin Panel** with user and booking management  
+✅ JWT authentication and protected routes
+
+---
+
+## 📁 Folder Structure
+
+
+Kiwicare_frontend/
+├── public/
+├── src/
+│   ├── assets/
+│   │   └── react.svg
+│   │
+│   ├── components/
+│   │   ├── Navbar.jsx
+│   │   └── ProtectedRoute.jsx
+│   │
+│   ├── pages/
+│   │   ├── AdminDashboard.jsx
+│   │   ├── BookHelp.jsx
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   ├── RequestHelp.jsx
+│   │   ├── UserDashboard.jsx
+│   │   ├── UserMakePayment.jsx
+│   │   ├── UserMessages.jsx
+│   │   ├── UserMyBookings.jsx
+│   │   ├── UserPaymentHistory.jsx
+│   │   ├── UserReceivedMessages.jsx
+│   │   ├── VolunteerAvailability.jsx
+│   │   ├── VolunteerDashboard.jsx
+│   │   ├── VolunteerMessages.jsx
+│   │   ├── VolunteerMyBookings.jsx
+│   │   └── VolunteerSentMessages.jsx
+│   │
+│   ├── services/
+│   │   └── api.js
+│   │
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   ├── main.jsx
+│   └── Welcome.jsx
+│
+
+├── .gitignore
+├── index.html
+├── package.json
+├── tailwind.config.js
+├── vite.config.js
+└── README.md       
+
+## 🔗 Backend Repository
+
+➡️ **KiwiCare Backend (Spring Boot):** [Click here to view the backend repo](https://github.com/Vigneh-sd/Backend_Kiwicare.git)
+
+---
+
+## 👨‍💻 Author
+
+Developed by **Vignesh Subramaniam**  
+📧 Connect with me on [LinkedIn](https://www.linkedin.com/in/vigneshsubramaniam07/)
+
+
+
+
