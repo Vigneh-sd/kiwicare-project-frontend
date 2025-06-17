@@ -80,14 +80,18 @@ Kiwicare_frontend/
 
 ## 🔗 Backend Repository
 
-➡️ **KiwiCare Backend (Spring Boot):** [Click here to view the backend repo](https://github.com/Vigneh-sd/Backend_Kiwicare.git)
+➡️ **KiwiCare Backend (Spring Boot)**  
+https://github.com/Vigneh-sd/Backend_Kiwicare.git
 
 ---
 
 ## 👨‍💻 Author
 
 Developed by **Vignesh Subramaniam**  
-📧 Connect with me on [LinkedIn](https://www.linkedin.com/in/vigneshsubramaniam07/)
+📧 Connect with me on LinkedIn  
+https://www.linkedin.com/in/vigneshsubramaniam07/
+
+
 
 
 
