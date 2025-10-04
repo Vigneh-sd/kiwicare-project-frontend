@@ -13,6 +13,9 @@ function BookHelp() {
   const accessToken = localStorage.getItem('accessToken');
   const userId = jwtDecode(accessToken).id;
 
+  //  Use environment variable for API base URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const handleSearch = async () => {
     if (!date || !fromTime || !toTime) {
       toast.warning("Please select date and time range.");
@@ -20,7 +23,7 @@ function BookHelp() {
     }
 
     try {
-      const res = await axios.get(`http://localhost:8080/availability/search`, {
+      const res = await axios.get(`${API_BASE_URL}/availability/search`, {
         params: { date, fromTime, toTime },
         headers: { Authorization: `Bearer ${accessToken}` }
       });
@@ -42,7 +45,7 @@ function BookHelp() {
 
     try {
       await axios.post(
-        'http://localhost:8080/bookings',
+        `${API_BASE_URL}/bookings`,
         {
           userId,
           volunteerId: selectedVolunteerId,

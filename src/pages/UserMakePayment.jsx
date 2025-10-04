@@ -7,14 +7,18 @@ function UserMakePayment() {
   const [bookings, setBookings] = useState([]);
   const [selectedBookingId, setSelectedBookingId] = useState('');
   const [amount, setAmount] = useState('');
+
   const accessToken = localStorage.getItem('accessToken');
   const decoded = jwtDecode(accessToken);
   const userId = decoded.id;
 
+  // ✅ use env variable for API base URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/bookings/user/${userId}`, {
+        const res = await axios.get(`${API_BASE_URL}/bookings/user/${userId}`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         setBookings(res.data);
@@ -25,7 +29,7 @@ function UserMakePayment() {
     };
 
     fetchBookings();
-  }, [userId, accessToken]);
+  }, [API_BASE_URL, userId, accessToken]);
 
   const handlePayment = async () => {
     if (!selectedBookingId || !amount) {
@@ -34,13 +38,17 @@ function UserMakePayment() {
     }
 
     try {
-      await axios.post('http://localhost:8080/payments', {
-        userId,
-        bookingId: selectedBookingId,
-        amount,
-      }, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+      await axios.post(
+        `${API_BASE_URL}/payments`,
+        {
+          userId,
+          bookingId: selectedBookingId,
+          amount,
+        },
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
 
       toast.success("Payment successful!");
       setSelectedBookingId('');

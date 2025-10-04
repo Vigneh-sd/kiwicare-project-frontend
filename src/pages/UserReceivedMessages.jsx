@@ -12,16 +12,22 @@ function UserReceivedMessages() {
   const decodedToken = jwtDecode(accessToken);
   const userId = decodedToken.id;
 
+  // ✅ Use env-based backend URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/messages/received/${userId}`,
+          `${API_BASE_URL}/messages/received/${userId}`,
           {
             headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
-        const messagesWithReply = response.data.map((m) => ({ ...m, reply: '' }));
+        const messagesWithReply = response.data.map((m) => ({
+          ...m,
+          reply: '',
+        }));
         setMessages(messagesWithReply);
       } catch (error) {
         console.error('Error fetching messages:', error);
@@ -31,12 +37,12 @@ function UserReceivedMessages() {
     };
 
     fetchMessages();
-  }, [userId, accessToken]);
+  }, [API_BASE_URL, userId, accessToken]);
 
   const handleReply = async (msgId, receiverId, replyText) => {
     try {
       await axios.post(
-        'http://localhost:8080/messages',
+        `${API_BASE_URL}/messages`,
         {
           senderId: userId,
           receiverId,
@@ -46,7 +52,8 @@ function UserReceivedMessages() {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
       );
-      toast.success("Reply sent!");
+
+      toast.success('Reply sent!');
       setMessages((prev) =>
         prev.map((msg) =>
           msg.id === msgId ? { ...msg, reply: '' } : msg
@@ -54,16 +61,19 @@ function UserReceivedMessages() {
       );
     } catch (error) {
       console.error('Reply failed:', error);
-      toast.error("Failed to send reply.");
+      toast.error('Failed to send reply.');
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 px-4">
       <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-blue-700 mb-2">📥 Messages from Volunteers</h2>
+        <h2 className="text-3xl font-bold text-blue-700 mb-2">
+          📥 Messages from Volunteers
+        </h2>
         <p className="text-gray-600 mb-6">
-          These are replies sent by volunteers in response to your help requests. You can reply back below.
+          These are replies sent by volunteers in response to your help requests.
+          You can reply back below.
         </p>
 
         {loading ? (
@@ -83,7 +93,8 @@ function UserReceivedMessages() {
                   <strong>From:</strong> {msg.sender.name} ({msg.sender.location})
                 </p>
                 <p className="mb-1 text-sm text-gray-700">
-                  <strong>Sent at:</strong> {new Date(msg.timestamp).toLocaleString()}
+                  <strong>Sent at:</strong>{' '}
+                  {new Date(msg.timestamp).toLocaleString()}
                 </p>
                 <p className="text-sm mb-3">
                   <strong>Message:</strong> {msg.content}
@@ -103,7 +114,9 @@ function UserReceivedMessages() {
                   }
                 />
                 <button
-                  onClick={() => handleReply(msg.id, msg.sender.id, msg.reply)}
+                  onClick={() =>
+                    handleReply(msg.id, msg.sender.id, msg.reply)
+                  }
                   className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700 transition"
                 >
                   📤 Send Reply

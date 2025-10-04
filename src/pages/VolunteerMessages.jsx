@@ -14,15 +14,16 @@ function VolunteerMessages() {
   const decodedToken = jwtDecode(accessToken);
   const volunteerId = decodedToken.id;
 
+  // ✅ Use environment variable for backend
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/messages/received/${volunteerId}`,
+          `${API_BASE_URL}/messages/received/${volunteerId}`,
           {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+            headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
         const messagesWithReply = response.data.map(m => ({ ...m, reply: '' }));
@@ -35,12 +36,12 @@ function VolunteerMessages() {
     };
 
     fetchMessages();
-  }, [volunteerId, accessToken]);
+  }, [API_BASE_URL, volunteerId, accessToken]);
 
   const handleReply = async (msgId, receiverId, replyText) => {
     try {
       await axios.post(
-        'http://localhost:8080/messages',
+        `${API_BASE_URL}/messages`,
         {
           senderId: volunteerId,
           receiverId,
@@ -67,7 +68,9 @@ function VolunteerMessages() {
     <div className="min-h-screen flex items-center justify-center bg-blue-50 px-4">
       <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-8">
         <h2 className="text-3xl font-bold text-blue-700 mb-2">📥 Received Messages</h2>
-        <p className="text-gray-600 mb-6">These are help requests sent to you by users. You can reply to them below.</p>
+        <p className="text-gray-600 mb-6">
+          These are help requests sent to you by users. You can reply to them below.
+        </p>
 
         {loading ? (
           <div className="flex justify-center mt-10">

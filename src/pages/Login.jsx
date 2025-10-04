@@ -7,6 +7,8 @@ function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // ✅ Environment variable
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -14,10 +16,12 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:8080/auth/login', formData);
+      const res = await axios.post(`${API_BASE_URL}/auth/login`, formData);
       const { accessToken } = res.data;
+
       localStorage.setItem('accessToken', accessToken);
 
+      // Decode the JWT payload
       const decoded = JSON.parse(atob(accessToken.split('.')[1]));
       const role = decoded.authorities[0].replace("ROLE_", "");
 
@@ -26,8 +30,8 @@ function Login() {
       if (role === 'USER') navigate('/user/dashboard');
       else if (role === 'VOLUNTEER') navigate('/volunteer/dashboard');
       else if (role === 'ADMIN') navigate('/admin/dashboard');
-
     } catch (error) {
+      console.error('Login error:', error);
       toast.error('Invalid email or password!');
     }
   };

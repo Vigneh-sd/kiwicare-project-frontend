@@ -1,7 +1,9 @@
+// api.js
 import axios from 'axios';
 
+//  Use environment variable for production deployment
 const API = axios.create({
-  baseURL: 'http://localhost:8080', 
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
 export const registerUser = (data) => API.post('/auth/register', data);

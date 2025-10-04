@@ -11,16 +11,15 @@ function VolunteerMyBookings() {
   const decodedToken = jwtDecode(accessToken);
   const volunteerId = decodedToken.id;
 
+  // ✅ Use env-based backend URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/bookings/volunteer/${volunteerId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          `${API_BASE_URL}/bookings/volunteer/${volunteerId}`,
+          { headers: { Authorization: `Bearer ${accessToken}` } }
         );
         setBookings(response.data);
       } catch (error) {
@@ -31,7 +30,7 @@ function VolunteerMyBookings() {
     };
 
     fetchBookings();
-  }, [volunteerId, accessToken]);
+  }, [API_BASE_URL, volunteerId, accessToken]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 px-4">

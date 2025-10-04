@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
 import { toast } from 'react-toastify';
 
 function Register() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -10,6 +12,7 @@ function Register() {
     location: '',
     role: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ 
@@ -28,9 +31,12 @@ function Register() {
     }
 
     try {
+      setIsSubmitting(true);
       const response = await registerUser(formData);
-      toast.success(response.data);
+      toast.success(response.data || "Registration successful!");
       console.log("Registration successful:", response.data);
+
+      setTimeout(() => navigate('/login'), 1500); // redirect to login
     } catch (error) {
       const backendMessage =
         error?.response?.data && typeof error.response.data === 'string'
@@ -39,6 +45,8 @@ function Register() {
 
       toast.error(backendMessage);
       console.error("Registration failed:", backendMessage);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -85,9 +93,12 @@ function Register() {
 
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-200"
+            disabled={isSubmitting}
+            className={`w-full py-2 text-white font-semibold rounded-lg transition duration-200 ${
+              isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+            }`}
           >
-            ✅ Register
+            {isSubmitting ? '⏳ Registering...' : '✅ Register'}
           </button>
         </form>
       </div>

@@ -13,6 +13,9 @@ function VolunteerAvailability() {
   const [toTime, setToTime] = useState('');
   const [available, setAvailable] = useState(false);
 
+  // ✅ Use env variable for backend URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const handleSubmit = async () => {
     if (!date || !fromTime || !toTime) {
       toast.warning('Please select date, from time and to time.');
@@ -21,7 +24,7 @@ function VolunteerAvailability() {
 
     try {
       await axios.post(
-        `http://localhost:8080/availability/save`,
+        `${API_BASE_URL}/availability/save`,
         {
           volunteer: { id: volunteerId },
           date,
@@ -59,7 +62,9 @@ function VolunteerAvailability() {
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow rounded-lg mt-8">
-      <h2 className="text-2xl font-bold mb-6 text-center text-blue-700">🕒 Set Your Availability</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center text-blue-700">
+        🕒 Set Your Availability
+      </h2>
 
       <div className="mb-4">
         <label className="block mb-1 font-medium">Date</label>

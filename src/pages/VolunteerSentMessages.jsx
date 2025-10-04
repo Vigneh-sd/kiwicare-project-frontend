@@ -11,11 +11,14 @@ function VolunteerSentMessages() {
   const decodedToken = jwtDecode(accessToken);
   const volunteerId = decodedToken.id;
 
+  // ✅ Use environment variable for base URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/messages/sent/${volunteerId}`,
+          `${API_BASE_URL}/messages/sent/${volunteerId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -31,7 +34,7 @@ function VolunteerSentMessages() {
     };
 
     fetchMessages();
-  }, [volunteerId, accessToken]);
+  }, [API_BASE_URL, volunteerId, accessToken]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 px-4">
@@ -52,10 +55,12 @@ function VolunteerSentMessages() {
                 className="border border-gray-200 rounded-xl p-5 shadow-sm bg-blue-50"
               >
                 <div className="mb-2 text-sm text-gray-500">
-                  <span className="font-medium text-gray-700">To:</span> {msg.receiver.name} ({msg.receiver.location})
+                  <span className="font-medium text-gray-700">To:</span>{' '}
+                  {msg.receiver.name} ({msg.receiver.location})
                 </div>
                 <div className="mb-2 text-sm text-gray-500">
-                  <span className="font-medium text-gray-700">Sent at:</span> {new Date(msg.timestamp).toLocaleString()}
+                  <span className="font-medium text-gray-700">Sent at:</span>{' '}
+                  {new Date(msg.timestamp).toLocaleString()}
                 </div>
                 <div className="text-gray-800">
                   <span className="font-medium">Message:</span> {msg.content}

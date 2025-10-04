@@ -11,11 +11,14 @@ function UserMessages() {
   const decodedToken = jwtDecode(accessToken);
   const userId = decodedToken.id;
 
+  // ✅ Use environment-based backend URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/messages/sent/${userId}`,
+          `${API_BASE_URL}/messages/sent/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -31,12 +34,14 @@ function UserMessages() {
     };
 
     fetchMessages();
-  }, [userId, accessToken]);
+  }, [API_BASE_URL, userId, accessToken]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 px-4">
       <div className="w-full max-w-3xl bg-white rounded-2xl shadow-2xl p-8">
-        <h2 className="text-3xl font-bold text-blue-700 mb-4 text-center">📤 Sent Messages</h2>
+        <h2 className="text-3xl font-bold text-blue-700 mb-4 text-center">
+          📤 Sent Messages
+        </h2>
 
         {loading ? (
           <div className="flex justify-center mt-8">

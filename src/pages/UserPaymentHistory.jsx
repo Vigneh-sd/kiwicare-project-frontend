@@ -9,10 +9,13 @@ function UserPaymentHistory() {
   const accessToken = localStorage.getItem('accessToken');
   const userId = jwtDecode(accessToken).id;
 
+  // ✅ Use environment-based API URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/payments/user/${userId}`, {
+        const res = await axios.get(`${API_BASE_URL}/payments/user/${userId}`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         setPayments(res.data);
@@ -23,7 +26,7 @@ function UserPaymentHistory() {
       }
     };
     fetchPayments();
-  }, [userId, accessToken]);
+  }, [API_BASE_URL, userId, accessToken]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 px-4">

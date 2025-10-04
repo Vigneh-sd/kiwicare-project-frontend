@@ -12,9 +12,12 @@ function AdminDashboard() {
   const accessToken = localStorage.getItem('accessToken');
   const headers = { Authorization: `Bearer ${accessToken}` };
 
+  //  Use environment variable instead of localhost
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/admin/users', { headers });
+      const res = await axios.get(`${API_BASE_URL}/admin/users`, { headers });
       setUsers(res.data);
       toast.success('Fetched all users!');
     } catch (error) {
@@ -25,7 +28,7 @@ function AdminDashboard() {
 
   const fetchVolunteers = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/admin/volunteers', { headers });
+      const res = await axios.get(`${API_BASE_URL}/admin/volunteers`, { headers });
       setVolunteers(res.data);
       toast.success('Fetched all volunteers!');
     } catch (error) {
@@ -41,7 +44,7 @@ function AdminDashboard() {
     }
 
     try {
-      const res = await axios.get(`http://localhost:8080/admin/user/${selectedUserId}`, { headers });
+      const res = await axios.get(`${API_BASE_URL}/admin/user/${selectedUserId}`, { headers });
       setSelectedUser(res.data);
       toast.success('User found!');
     } catch (error) {
@@ -55,7 +58,7 @@ function AdminDashboard() {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      await axios.delete(`http://localhost:8080/admin/user/${id}`, { headers });
+      await axios.delete(`${API_BASE_URL}/admin/user/${id}`, { headers });
       toast.success("User deleted!");
       fetchUsers();
       fetchVolunteers();
@@ -67,7 +70,7 @@ function AdminDashboard() {
 
   const fetchAllBookings = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/bookings/admin/all', { headers });
+      const res = await axios.get(`${API_BASE_URL}/bookings/admin/all`, { headers });
       setBookings(res.data);
       toast.success('Fetched all bookings!');
     } catch (error) {

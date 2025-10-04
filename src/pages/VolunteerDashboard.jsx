@@ -12,11 +12,14 @@ function VolunteerDashboard() {
   const decodedToken = jwtDecode(accessToken);
   const volunteerId = decodedToken.id;
 
+  // ✅ Use env variable for backend URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     const fetchAvailability = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/availability/get/${volunteerId}`,
+          `${API_BASE_URL}/availability/get/${volunteerId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -32,7 +35,7 @@ function VolunteerDashboard() {
     };
 
     fetchAvailability();
-  }, []);
+  }, [API_BASE_URL, volunteerId, accessToken]);
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8">
